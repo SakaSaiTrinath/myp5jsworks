@@ -1,13 +1,16 @@
-
-function Obs() {
+   
+function Obs(obspic,x,speed,flag,bpos,groundy) {
 	this.height = 60;
 	this.width = 20;
-	this.x = width-1;
+	this.x = x;
 	this.y = 290;
-	this.speed = 5;
+	this.speed = speed;
 	this.blockx = 0;
 	this.blocky = 0;
-
+ 	this.flag = flag;
+ 	this.bpos = bpos;
+ 	this.ground = groundy-this.height;
+ 	this.sky = 160;
 
 	this.hits = function(dino) {
 		if((this.x >= dino.x && this.x <= dino.x+dino.width) || (this.x+this.width >= dino.x && this.x+this.width <= dino.x+dino.width)) {
@@ -24,9 +27,25 @@ function Obs() {
 	}
 
 	this.display = function() {
-		fill(232,81,0);
-		noStroke();
-		rect(this.x,this.y,this.width,this.height,2);
+		if(this.flag == 0) {				//normal obstacle
+			//fill(232,81,0);
+			//noStroke();
+			//rect(this.x,this.y,this.width,this.height,2);
+			image(obspic,this.x,this.y/*,this.width,this.height*/);
+		} else {					//bird obstacle
+			fill(0,0,255);
+			noStroke();
+			if(bpos==0)
+			{
+				ellipse(this.x,this.ground,50,20); //on ground
+				//image(obspic,this.x,this.ground);
+			}
+			else
+			{
+				ellipse(this.x,this.sky,50,20); //flying
+				//image(obspic,this.x,this.sky);
+			}
+		}
 	}
 
 	this.move = function() {
@@ -36,6 +55,10 @@ function Obs() {
 			this.x = this.blockx;
 			this.y = this.blocky; 
 		}
+	}
+
+	this.upspeed = function(speed) {
+		this.speed=speed;
 	}
 
 	this.offscreen = function() {
