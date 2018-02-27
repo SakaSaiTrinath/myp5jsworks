@@ -8,7 +8,7 @@ function Star() {
 		fill(255);
 		ellipse(this.x,this.y,5,5);
 	}
-
+ 
 	this.update = function() {
 		this.x -= this.speed;
 	}
